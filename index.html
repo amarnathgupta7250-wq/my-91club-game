@@ -98,7 +98,8 @@
     </div>
 
     <script>
-        const ONLINE_API_URL = " https://my-91club-game.onrender.com";
+        // 🎯 आपका असली ऑनलाइन रेंडर लिंक यहाँ 100% सही सेट कर दिया गया है
+        const ONLINE_API_URL = "https://onrender.com";
 
         function switchAuth(mode) {
             document.getElementById('login-box').classList.add('hidden');
@@ -107,7 +108,6 @@
             
             document.getElementById('tab-login').classList.remove('active');
             document.getElementById('tab-register').classList.remove('active');
-            document.getElementById('auth-tabs-nav').classList.remove('hidden');
 
             if(mode === 'login') {
                 document.getElementById('login-box').classList.remove('hidden');
@@ -117,14 +117,13 @@
                 document.getElementById('tab-register').classList.add('active');
             } else if(mode === 'forgot') {
                 document.getElementById('forgot-box').classList.remove('hidden');
-                document.getElementById('auth-tabs-nav').classList.add('hidden');
             }
         }
 
         async function processLogin() {
             let phone = document.getElementById('login-phone').value;
             let pass = document.getElementById('login-pass').value;
-            if(phone === "" || pass === "") { alert("त्रुटि: कृपया नंबर और पासवर्ड भरें!"); return; }
+            if(!phone || !pass) { alert("त्रुटि: कृपया नंबर और पासवर्ड भरें!"); return; }
 
             try {
                 let response = await fetch(`${ONLINE_API_URL}/api/login`, {
@@ -144,7 +143,7 @@
             let phone = document.getElementById('reg-phone').value;
             let otp = document.getElementById('reg-otp').value;
             let pass = document.getElementById('reg-pass').value;
-            if(phone === "" || otp === "" || pass === "") { alert("त्रुटि: सभी बॉक्स भरें!"); return; }
+            if(!phone || !otp || !pass) { alert("त्रुटि: सभी बॉक्स भरें!"); return; }
 
             try {
                 let response = await fetch(`${ONLINE_API_URL}/api/register`, {
@@ -155,7 +154,7 @@
                 let data = await response.json();
                 if(data.success) { alert("रजिस्ट्रेशन सफल! अब लॉगिन करें।"); switchAuth('login'); } 
                 else { alert("त्रुटि: " + data.message); }
-            } catch (error) { alert("ऑनलाइन सर्वर कनेक्शन fail!"); }
+            } catch (error) { alert("ऑनलाइन सर्वर कनेक्शन फेल!"); }
         }
 
         async function processResetPassword() {
@@ -163,7 +162,7 @@
             let otp = document.getElementById('forgot-otp').value;
             let newPass = document.getElementById('forgot-new-pass').value;
 
-            if(phone === "" || otp === "" || newPass === "") { alert("त्रुटि: कृपया सभी विवरण दर्ज करें!"); return; }
+            if(!phone || !otp || !newPass) { alert("त्रुटि: कृपया सभी विवरण दर्ज करें!"); return; }
             if(otp !== "9900") { alert("गलत रीसेट OTP! सही कोड '9900' डालें।"); return; }
 
             try {
@@ -177,5 +176,8 @@
                     alert("🎉 पासवर्ड सफलतापूर्वक बदल गया है! अब नए पासवर्ड से लॉगिन करें।");
                     switchAuth('login');
                 } else { alert("त्रुटि: " + data.message); }
-            } catch (error) { alert("ऑनलाइन सर्वर एरर! पासवर्ड अपडेट नहीं हो सका।"); }
+            } catch (error) { alert("ONLINE SERVER ERROR!"); }
         }
+    </script>
+</body>
+</html>

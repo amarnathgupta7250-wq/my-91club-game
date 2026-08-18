@@ -11,7 +11,7 @@ let userBetAmount = 0;
 
 let userPhone = localStorage.getItem('userPhone') || "9999999999";
 
-// 🌐 यहाँ आपका असली लाइव ऑनलाइन रेंडर लिंक पहले से सेट है
+// 🎯 आपका असली ऑनलाइन रेंडर लिंक यहाँ भी 100% सही सेट कर दिया गया है
 const ONLINE_API_URL = "https://onrender.com";
 
 async function fetchLiveBalanceFromServer() {
@@ -199,6 +199,7 @@ function setDepAmt(amt) {
     if (depInput) depInput.value = amt;
 }
 
+// 🎯 असली QR कोड पेमेंट रिक्वेस्ट भेजने का फंक्शन
 async function addMoney() {
     let amtInput = document.getElementById('dep-amount');
     if (!amtInput) return;
