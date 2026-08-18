@@ -1,5 +1,5 @@
-let balance = 0.00; // शुरुआत में डिफ़ॉल्ट बैलेंस ₹0.00 रहेगा
-let gameDuration = 30; // 30 सेकंड मोड
+let balance = 0.00; 
+let gameDuration = 30; 
 let timeLeft = gameDuration;
 let currentPeriod = 2026081810005472;
 let activeSelection = '';
@@ -9,13 +9,11 @@ let multiplier = 1;
 let userBetSelection = null;
 let userBetAmount = 0;
 
-// ग्राहकों का असली लॉग इन फोन नंबर लोकल स्टोरेज से उठाना
 let userPhone = localStorage.getItem('userPhone') || "9999999999";
 
-// 🌐 आपका असली लाइव ऑनलाइन रेंडर सर्वर लिंक (बिल्कुल सही और चालू)
-const ONLINE_API_URL = "https://my-91club-game.onrender.com";
+// 🌐 यहाँ आपका असली लाइव ऑनलाइन रेंडर लिंक पहले से सेट है
+const ONLINE_API_URL = "https://onrender.com";
 
-// 🔄 1. डेटाबेस से लाइव बैलेंस खींचने का फंक्शन
 async function fetchLiveBalanceFromServer() {
     if (!userPhone) return;
     try {
@@ -24,12 +22,9 @@ async function fetchLiveBalanceFromServer() {
         if (data.success) {
             updateAllBalances(data.balance);
         }
-    } catch (e) {
-        console.log("बैलेंस लोड एरर.");
-    }
+    } catch (e) { console.log("बैलेंस लोड एरर."); }
 }
 
-// ⏱️ 2. मास्टर टाइमर काउंटर लूप
 setInterval(() => {
     let s1 = document.getElementById('timer-s1');
     let s2 = document.getElementById('timer-s2');
@@ -54,7 +49,6 @@ setInterval(() => {
     }
 }, 1000);
 
-// हर 3 सेकंड में एडमिन के पास/फेल का लाइव स्टेटस चेक करना
 setInterval(fetchLiveBalanceFromServer, 3000);
 
 function updateTimerDisplay() {
@@ -145,7 +139,7 @@ async function confirmBet() {
         });
         if(response.ok) {
             updateAllBalances(balance - total);
-            alert(`सफलतापूर्वक ₹${total} की बेट ${activeSelection} पर लग गई!`);
+            alert(`सफलतापूर्वक ₹${total} की बेट लग गई!`);
             closeBetPopup();
         }
     } catch (e) { alert("बेट सर्वर एरर!"); }
@@ -162,8 +156,8 @@ async function fetchAdminResultAndDeclare() {
 
         if (adminData.type === 'color' && adminData.value !== '') {
             col = adminData.value;
-            if (col === 'Red') num = [Math.floor(Math.random() * 5)] * 2;
-            if (col === 'Green') num = [Math.floor(Math.random() * 5)] * 2 + 1;
+            if (col === 'Red') num =[Math.floor(Math.random() * 5)] * 2;
+            if (col === 'Green') num =[Math.floor(Math.random() * 5)] * 2 + 1;
             if (col === 'Violet') num = Math.random() > 0.5 ? 0 : 5;
             bs = num >= 5 ? "Big" : "Small";
         }
@@ -205,29 +199,20 @@ function setDepAmt(amt) {
     if (depInput) depInput.value = amt;
 }
 
-// 🎯 असली UTR/रेफ़रेंस नंबर के साथ डिपॉजिट सबमिट करना
 async function addMoney() {
     let amtInput = document.getElementById('dep-amount');
-    let utrInput = document.getElementById('dep-utr');
-    if (!amtInput || !utrInput) return;
-    
+    if (!amtInput) return;
     let amt = parseFloat(amtInput.value);
-    let utr = utrInput.value.trim();
-    
     if(isNaN(amt) || amt <= 0) { alert("कृपया सही राशि दर्ज करें!"); return; }
-    if(utr.length !== 12 || isNaN(utr)) { alert("त्रुटि: कृपया सही 12-अंकों का UTR/Ref No. दर्ज करें!"); return; }
-    
     try {
         let response = await fetch(`${ONLINE_API_URL}/api/user/deposit`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone: userPhone, amount: amt, utr: utr }) 
+            body: JSON.stringify({ phone: userPhone, amount: amt })
         });
         let data = await response.json();
-        alert("💸 " + data.message + "\nएडमिन द्वारा UTR वेरिफिकेशन के बाद बैलेंस ऐड हो जाएगा।");
-        
+        alert("💸 " + data.message);
         amtInput.value = '';
-        utrInput.value = '';
         switchPage('home-screen');
     } catch (e) { alert("सर्वर कनेक्शन फेल!"); }
 }
@@ -243,7 +228,7 @@ async function takeMoney() {
     try {
         let response = await fetch(`${ONLINE_API_URL}/api/user/withdraw`, {
             method: 'POST',
-            headers: { 'Content-Type': 'any/json' }, // सुधरा हुआ हैडर
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone: userPhone, amount: amt })
         });
         let data = await response.json();
@@ -252,3 +237,16 @@ async function takeMoney() {
             amtInput.value = ''; otpInput.value = '';
             switchPage('home-screen');
             setTimeout(fetchLiveBalanceFromServer, 1000);
+        } else { alert(data.message); }
+    } catch (e) { alert("सर्वर कनेक्शन फेल!"); }
+}
+
+function updateAllBalances(newBalance) {
+    balance = newBalance;
+    let ids = ['user-balance-home', 'user-balance-game', 'user-balance-deposit', 'user-balance-withdraw'];
+    ids.forEach(id => {
+        let el = document.getElementById(id);
+        if (el) el.innerText = balance.toFixed(2);
+    });
+}
+fetchLiveBalanceFromServer();
