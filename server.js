@@ -6,8 +6,8 @@ app.use(express.json());
 app.use(cors());
 const PORT = process.env.PORT || 5000;
 
-// 🌐 यहाँ मुफ़्त ऑनलाइन डेटाबेस का असली लिंक जोड़ दिया गया है ताकि रेंडर इसे तुरंत पढ़ सके 🎯
-const ONLINE_MONGO_URI = "mongodb+urlencoded_true_cluster://amarnath:club9191@cluster0.v8n2a.mongodb.net/91club_live?retryWrites=true&w=majority";
+// 🌐 यहाँ ऑनलाइन क्लाउड डेटाबेस (MongoDB Atlas) का असली लिंक सेट है ताकि इंटरनेट पर डेटा सेव हो सके 🎯
+const ONLINE_MONGO_URI = "mongodb+srv://amarnath:club9191@cluster0.v8n2a.mongodb.net/91club_live?retryWrites=true&w=majority";
 
 mongoose.connect(ONLINE_MONGO_URI)
     .then(() => console.log("ऑनलाइन क्लाउड डेटाबेस सफलतापूर्वक कनेक्टेड! 🚀"))
