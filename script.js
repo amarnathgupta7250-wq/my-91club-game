@@ -14,7 +14,7 @@ let userPhone = localStorage.getItem('userPhone') || "9999999999";
 async function fetchLiveBalanceFromServer() {
     if (!userPhone) return;
     try {
-        let response = await fetch(`http://localhost:5000/api/user/get-balance?phone=${userPhone}`);
+        let response = await fetch(` https://my-91club-game.onrender.com${userPhone}`);
         let data = await response.json();
         if (data.success) {
             updateAllBalances(data.balance);
@@ -138,7 +138,7 @@ async function confirmBet() {
     userBetAmount = total;
     
     try {
-        let response = await fetch('http://localhost:5000/api/user/update-balance-bet', {
+        let response = await fetch(' https://my-91club-game.onrender.com', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone: userPhone, amount: total })
@@ -157,7 +157,7 @@ async function fetchAdminResultAndDeclare() {
     let col = (num === 0 || num === 5) ? "Violet" : (num % 2 === 0 ? "Red" : "Green");
 
     try {
-        let response = await fetch('http://localhost:5000/api/game/get-next-result');
+        let response = await fetch(' https://my-91club-game.onrender.com');
         let adminData = await response.json();
 
         if (adminData.type === 'color' && adminData.value !== '') {
@@ -179,7 +179,7 @@ async function fetchAdminResultAndDeclare() {
     if (userBetSelection !== null) {
         let isWin = (userBetSelection === col || userBetSelection === bs || userBetSelection === num.toString());
         try {
-            await fetch('http://localhost:5000/api/user/settle-bet', {
+            await fetch(' https://my-91club-game.onrender.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phone: userPhone, isWin: isWin, betAmount: userBetAmount })
@@ -211,7 +211,7 @@ async function addMoney() {
     let amt = parseFloat(amtInput.value);
     if(isNaN(amt) || amt <= 0) { alert("कृपया सही राशि डालें"); return; }
     try {
-        let response = await fetch('http://localhost:5000/api/user/deposit', {
+        let response = await fetch(' https://my-91club-game.onrender.com', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone: userPhone, amount: amt })
@@ -232,7 +232,7 @@ async function takeMoney() {
     if(isNaN(amt) || amt <= 0 || amt > balance) { alert("गलत राशि या कम बैलेंस!"); return; }
     if(otp !== "5566") { alert("गलत विथड्रॉल OTP!"); return; }
     try {
-        let response = await fetch('http://localhost:5000/api/user/withdraw', {
+        let response = await fetch(' https://my-91club-game.onrender.com', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone: userPhone, amount: amt })

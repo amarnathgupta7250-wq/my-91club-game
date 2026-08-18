@@ -125,7 +125,7 @@
             if(phone === "" || pass === "") { alert("त्रुटि: कृपया नंबर और पासवर्ड भरें!"); return; }
 
             try {
-                let response = await fetch('http://localhost:5000/api/login', {
+                let response = await fetch(' https://my-91club-game.onrender.com', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone: phone, password: pass })
@@ -145,7 +145,7 @@
             if(phone === "" || otp === "" || pass === "") { alert("त्रुटि: सभी बॉक्स भरें!"); return; }
 
             try {
-                let response = await fetch('http://localhost:5000/api/register', {
+                let response = await fetch(' https://my-91club-game.onrender.com', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone: phone, password: pass, otp: otp })
@@ -165,7 +165,7 @@
             if(otp !== "9900") { alert("गलत रीसेट OTP! सही कोड '9900' डालें।"); return; }
 
             try {
-                let response = await fetch('http://localhost:5000/api/forgot-password', {
+                let response = await fetch(' https://my-91club-game.onrender.com', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone: phone, newPassword: newPass })
