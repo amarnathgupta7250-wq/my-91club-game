@@ -9,7 +9,8 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 // 🔌 डेटाबेस कनेक्शन (ऑनलाइन और लोकल दोनों के लिए)
-const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/91club_db';
+const mongoURI = process.env.MONGODB_URI || mongoose.connect('mongodb+srv://admin:club9191@cluster0.mongodb.net/91club_db?retryWrites=true&w=majority')
+
 mongoose.connect(mongoURI)
     .then(() => console.log("डेटाबेस सफलतापूर्वक कनेक्ट हो गया है! 🔌"))
     .catch((err) => console.log("डेटाबेस कनेक्शन एरर: ", err));
