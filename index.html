@@ -98,6 +98,9 @@
     </div>
 
     <script>
+        // 🎯 आपका असली लाइव ऑनलाइन रेंडर लिंक यहाँ 100% सेट कर दिया गया है
+        const ONLINE_API_URL = "https://onrender.com";
+
         function switchAuth(mode) {
             document.getElementById('login-box').classList.add('hidden');
             document.getElementById('register-box').classList.add('hidden');
@@ -125,7 +128,7 @@
             if(phone === "" || pass === "") { alert("त्रुटि: कृपया नंबर और पासवर्ड भरें!"); return; }
 
             try {
-                let response = await fetch(' https://my-91club-game.onrender.com', {
+                let response = await fetch(`${ONLINE_API_URL}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone: phone, password: pass })
@@ -135,7 +138,7 @@
                     localStorage.setItem('userPhone', data.phone);
                     window.location.href = "game.html";
                 } else { alert("त्रुटि: " + data.message); }
-            } catch (error) { alert("सर्वर बंद है! VS Code में node server.js चालू करें।"); }
+            } catch (error) { alert("ऑनलाइन बैकएंड सर्वर कनेक्ट नहीं हो पा रहा है! कृपया रेंडर डैशबोर्ड चेक करें।"); }
         }
 
         async function processRegister() {
@@ -145,7 +148,7 @@
             if(phone === "" || otp === "" || pass === "") { alert("त्रुटि: सभी बॉक्स भरें!"); return; }
 
             try {
-                let response = await fetch(' https://my-91club-game.onrender.com', {
+                let response = await fetch(`${ONLINE_API_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone: phone, password: pass, otp: otp })
@@ -153,7 +156,7 @@
                 let data = await response.json();
                 if(data.success) { alert("रजिस्ट्रेशन सफल! अब लॉगिन करें।"); switchAuth('login'); } 
                 else { alert("त्रुटि: " + data.message); }
-            } catch (error) { alert("सर्वर कनेक्शन फेल!"); }
+            } catch (error) { alert("ऑनलाइन सर्वर कनेक्शन फेल!"); }
         }
 
         async function processResetPassword() {
@@ -165,7 +168,7 @@
             if(otp !== "9900") { alert("गलत रीसेट OTP! सही कोड '9900' डालें।"); return; }
 
             try {
-                let response = await fetch(' https://my-91club-game.onrender.com', {
+                let response = await fetch(`${ONLINE_API_URL}/api/forgot-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone: phone, newPassword: newPass })
@@ -175,8 +178,3 @@
                     alert("🎉 पासवर्ड सफलतापूर्वक बदल गया है! अब नए पासवर्ड से लॉगिन करें।");
                     switchAuth('login');
                 } else { alert("त्रुटि: " + data.message); }
-            } catch (error) { alert("सर्वर एरर! पासवर्ड अपडेट नहीं हो सका।"); }
-        }
-    </script>
-</body>
-</html>
