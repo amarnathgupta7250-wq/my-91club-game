@@ -6,14 +6,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// 🔌 डेटाबेस कनेक्शन
-mongoose.connect('mongodb://127.0.0.1:27017/91club_db')
-    .then(() => console.log("डेटाबेस (MongoDB) सफलतापूर्वक कनेक्ट हो गया है! 🔌"))
+// 🔌 डेटाबेस कनेक्शन (ऑनलाइन और लोकल दोनों के लिए)
+const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/91club_db';
+mongoose.connect(mongoURI)
+    .then(() => console.log("डेटाबेस सफलतापूर्वक कनेक्ट हो गया है! 🔌"))
     .catch((err) => console.log("डेटाबेस कनेक्शन एरर: ", err));
 
-// 👤 यूजर मॉडल (डिफ़ॉल्ट बैलेंस यहाँ ₹0.00 कर दिया गया है 🎯)
+// 👤 यूजर मॉडल
 const User = mongoose.model('User', new mongoose.Schema({
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -69,6 +70,7 @@ app.post('/api/register', async (req, res) => {
     } catch (err) { res.status(400).json({ success: false, message: "नंबर पहले से रजिस्टर्ड है!" }); }
 });
 
+// 🎯 लॉगिन एपीआई में सुधार (यहाँ success: true जोड़ दिया है ताकि क्लिक काम करे)
 app.post('/api/login', async (req, res) => {
     const { phone, password } = req.body;
     const user = await User.findOne({ phone, password });

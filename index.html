@@ -73,7 +73,7 @@
                 <button class="main-btn" onclick="processRegister()">Register Now</button>
             </div>
 
-            <!-- 🔄 3. फ़ॉरगेट密码 फॉर्म -->
+            <!-- 🔄 3. फ़ॉरगेट पासवर्ड फॉर्म -->
             <div id="forgot-box" class="hidden">
                 <h3 style="margin-top:0; color:#333;">Reset Password</h3>
                 <div class="input-group">
@@ -98,7 +98,6 @@
     </div>
 
     <script>
-        // 🎯 आपका असली लाइव ऑनलाइन रेंडर लिंक
         const ONLINE_API_URL = "https://onrender.com";
 
         function switchAuth(mode) {
@@ -156,7 +155,7 @@
                 let data = await response.json();
                 if(data.success) { alert("रजिस्ट्रेशन सफल! अब लॉगिन करें।"); switchAuth('login'); } 
                 else { alert("त्रुटि: " + data.message); }
-            } catch (error) { alert("ऑनलाइन सर्वर कनेक्शन फेल!"); }
+            } catch (error) { alert("ऑनलाइन सर्वर कनेक्शन fail!"); }
         }
 
         async function processResetPassword() {
@@ -178,3 +177,5 @@
                     alert("🎉 पासवर्ड सफलतापूर्वक बदल गया है! अब नए पासवर्ड से लॉगिन करें।");
                     switchAuth('login');
                 } else { alert("त्रुटि: " + data.message); }
+            } catch (error) { alert("ऑनलाइन सर्वर एरर! पासवर्ड अपडेट नहीं हो सका।"); }
+        }
