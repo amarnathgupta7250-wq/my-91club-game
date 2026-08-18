@@ -85,21 +85,31 @@
             </div>
         </div>
 
-        <!-- ==================== 3. डिपॉजिट स्क्रीन ==================== -->
+        <!-- ==================== 3. असली डिपॉजिट स्क्रीन (आपके QR कोड के साथ) ==================== -->
         <div id="deposit-screen" class="page-content hidden">
             <div class="wallet-header"><h3>Deposit Balance</h3><h2>₹<span id="user-balance-deposit">0.00</span></h2></div>
-            <div class="payment-methods-grid">
-                <div class="pm-box active">⚡ UPI-QR</div>
-                <div class="pm-box">Innate UPI</div>
-                <div class="pm-box">Paytm-QR</div>
-            </div>
-            <div class="deposit-body">
-                <h4>Select Deposit Amount</h4>
+            
+            <div class="deposit-body" style="text-align: center; padding: 15px;">
+                <h4 style="color: #333; margin-bottom: 5px;">⚡ Scan QR to Pay (क्यूआर स्कैन करें)</h4>
+                <p style="color: #666; font-size: 13px; margin-top: 0;">नीचे दिए गए QR कोड को किसी भी ऐप से स्कैन करके भुगतान करें</p>
+                
+                <!-- 📸 आपका असली QR कोड यहाँ लाइव लोड होगा (गूगल की ऑटो-जेनरेट एपीआई से) -->
+                <div style="margin: 15px auto; width: 210px; height: 210px; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center;">
+                    <img src="https://qrserver.com" alt="Paytm Business QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+
+                <!-- 🎯 आपकी असली UPI ID यहाँ सेट कर दी गई है -->
+                <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; font-weight: bold; color: #ff5e62; font-size: 15px; margin-bottom: 15px; border: 1px dashed #ff5e62; letter-spacing: 0.5px;">
+                    UPI ID: paytmqr5sqegn@ptys
+                </div>
+
                 <div class="quick-amt-grid">
                     <button onclick="setDepAmt(100)">₹100</button><button onclick="setDepAmt(200)">₹200</button><button onclick="setDepAmt(500)">₹500</button>
                 </div>
-                <input type="number" id="dep-amount" placeholder="₹ 100.00 - 50,000.00">
-                <button class="wallet-action-btn g-btn" onclick="addMoney()">Deposit Now</button>
+                
+                <input type="number" id="dep-amount" placeholder="₹ Enter Amount (राशि दर्ज करें)" style="margin-top: 15px;">
+                
+                <button class="wallet-action-btn g-btn" style="margin-top: 15px;" onclick="addMoney()">Submit Deposit Request</button>
             </div>
         </div>
 
@@ -140,20 +150,3 @@
                     <p>Multiplier</p>
                     <div class="multiplier-row mult-options"><button id="mu-1" class="active" onclick="setMultiplier(1)">X1</button><button id="mu-10" onclick="setMultiplier(10)">X10</button><button id="mu-20" onclick="setMultiplier(20)">X20</button><button id="mu-50" onclick="setMultiplier(50)">X50</button><button id="mu-100" onclick="setMultiplier(100)">X100</button></div>
                 </div>
-                <div class="popup-footer"><button class="cancel-btn" onclick="closeBetPopup()">Cancel</button><button class="confirm-bet-btn" onclick="confirmBet()">Total ₹<span id="total-bet-amount">1.00</span></button></div>
-            </div>
-        </div>
-
-        <!-- 📱 नीचे की 4-बटन नेविगेशन बार -->
-        <div class="bottom-nav">
-            <div class="nav-item active" id="nav-home" onclick="switchPage('home-screen')">🏠<br>Home</div>
-            <div class="nav-item" id="nav-game" onclick="switchPage('game-screen')">🎮<br>WinGo</div>
-            <div class="nav-item" id="nav-deposit" onclick="switchPage('deposit-screen')">💳<br>Deposit</div>
-            <div class="nav-item" id="nav-withdraw" onclick="switchPage('withdraw-screen')">💸<br>Withdraw</div>
-        </div>
-
-    </div>
-    <!-- ⚠️ यहाँ टाइमस्टैम्प जोड़ा है ताकि ब्राउज़र पुराना कचरा लोड न करे -->
-    <script src="script.js?v=2"></script> 
-</body>
-</html>
