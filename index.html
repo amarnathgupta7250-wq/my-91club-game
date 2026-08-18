@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>91 Club - Login & Register</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; display: flex; justify-content: center; }
+        .auth-container { background: #fff; width: 100%; max-width: 420px; min-height: 100vh; box-sizing: border-box; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .auth-header { background: linear-gradient(to right, #ff512f, #dd2476); color: white; padding: 30px 20px; text-align: center; }
+        .auth-header h1 { margin: 0; font-size: 32px; letter-spacing: 2px; }
+        .tab-bar { display: flex; background: #fff; border-bottom: 1px solid #ddd; }
+        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-size: 16px; cursor: pointer; color: #666; font-weight: bold; }
+        .tab-btn.active { color: #ff512f; border-bottom: 3px solid #ff512f; }
+        .auth-body { padding: 20px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; font-size: 14px; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; background: #fafafa; }
+        .otp-container { display: flex; gap: 10px; }
+        .otp-btn { background: #ff512f; color: white; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .main-btn { width: 100%; background: linear-gradient(to right, #ff512f, #dd2476); color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 25px; cursor: pointer; margin-top: 15px; }
+        .forgot-link { display: block; text-align: right; margin-top: 15px; color: #ff512f; font-size: 14px; text-decoration: none; font-weight: bold; cursor: pointer; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>91 CLUB</h1>
+        </div>
+        
+        <div id="auth-tabs-nav" class="tab-bar">
+            <button id="tab-login" class="tab-btn active" onclick="switchAuth('login')">📱 Log in</button>
+            <button id="tab-register" class="tab-btn" onclick="switchAuth('register')">📝 Register</button>
+        </div>
+
+        <div class="auth-body">
+            <!-- 🔑 1. लॉगिन फॉर्म -->
+            <div id="login-box">
+                <div class="input-group">
+                    <label>📱 Phone Number</label>
+                    <input type="text" id="login-phone" placeholder="Please enter the phone number">
+                </div>
+                <div class="input-group">
+                    <label>🔒 Password</label>
+                    <input type="password" id="login-pass" placeholder="Please enter the password">
+                </div>
+                <button class="main-btn" onclick="processLogin()">Log in</button>
+                <span class="forgot-link" onclick="switchAuth('forgot')">Forgot Password?</span>
+            </div>
+
+            <!-- 📝 2. रजिस्ट्रेशन फॉर्म -->
+            <div id="register-box" class="hidden">
+                <div class="input-group">
+                    <label>📱 Phone Number</label>
+                    <input type="text" id="reg-phone" placeholder="Please enter the phone number">
+                </div>
+                <div class="input-group">
+                    <label>💬 OTP Verification</label>
+                    <div class="otp-container">
+                        <input type="text" id="reg-otp" placeholder="Enter confirmation code">
+                        <button class="otp-btn" onclick="alert('रजिस्ट्रेशन OTP कोड है: 5566')">Send OTP</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>🔒 Set Password</label>
+                    <input type="password" id="reg-pass" placeholder="Set password">
+                </div>
+                <div class="input-group">
+                    <label>🎟️ Invite Code</label>
+                    <input type="text" placeholder="Invite code">
+                </div>
+                <button class="main-btn" onclick="processRegister()">Register Now</button>
+            </div>
+
+            <!-- 🔄 3. फ़ॉरगेट पासवर्ड फॉर्म -->
+            <div id="forgot-box" class="hidden">
+                <h3 style="margin-top:0; color:#333;">Reset Password</h3>
+                <div class="input-group">
+                    <label>📱 Registered Phone Number</label>
+                    <input type="text" id="forgot-phone" placeholder="Enter your phone number">
+                </div>
+                <div class="input-group">
+                    <label>💬 Security OTP</label>
+                    <div class="otp-container">
+                        <input type="text" id="forgot-otp" placeholder="Enter reset code">
+                        <button class="otp-btn" onclick="alert('पासवर्ड रीसेट OTP कोड है: 9900')">Get OTP</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>🔒 Enter New Password</label>
+                    <input type="password" id="forgot-new-pass" placeholder="Enter new password">
+                </div>
+                <button class="main-btn" onclick="processResetPassword()">Update Password</button>
+                <button class="main-btn" style="background:#666; margin-top:10px;" onclick="switchAuth('login')">Back to Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchAuth(mode) {
+            document.getElementById('login-box').classList.add('hidden');
+            document.getElementById('register-box').classList.add('hidden');
+            document.getElementById('forgot-box').classList.add('hidden');
+            
+            document.getElementById('tab-login').classList.remove('active');
+            document.getElementById('tab-register').classList.remove('active');
+            document.getElementById('auth-tabs-nav').classList.remove('hidden');
+
+            if(mode === 'login') {
+                document.getElementById('login-box').classList.remove('hidden');
+                document.getElementById('tab-login').classList.add('active');
+            } else if(mode === 'register') {
+                document.getElementById('register-box').classList.remove('hidden');
+                document.getElementById('tab-register').classList.add('active');
+            } else if(mode === 'forgot') {
+                document.getElementById('forgot-box').classList.remove('hidden');
+                document.getElementById('auth-tabs-nav').classList.add('hidden');
+            }
+        }
+
+        async function processLogin() {
+            let phone = document.getElementById('login-phone').value;
+            let pass = document.getElementById('login-pass').value;
+            if(phone === "" || pass === "") { alert("त्रुटि: कृपया नंबर और पासवर्ड भरें!"); return; }
+
+            try {
+                let response = await fetch('http://localhost:5000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phone, password: pass })
+                });
+                let data = await response.json();
+                if(data.success) {
+                    localStorage.setItem('userPhone', data.phone);
+                    window.location.href = "game.html";
+                } else { alert("त्रुटि: " + data.message); }
+            } catch (error) { alert("सर्वर बंद है! VS Code में node server.js चालू करें।"); }
+        }
+
+        async function processRegister() {
+            let phone = document.getElementById('reg-phone').value;
+            let otp = document.getElementById('reg-otp').value;
+            let pass = document.getElementById('reg-pass').value;
+            if(phone === "" || otp === "" || pass === "") { alert("त्रुटि: सभी बॉक्स भरें!"); return; }
+
+            try {
+                let response = await fetch('http://localhost:5000/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phone, password: pass, otp: otp })
+                });
+                let data = await response.json();
+                if(data.success) { alert("रजिस्ट्रेशन सफल! अब लॉगिन करें।"); switchAuth('login'); } 
+                else { alert("त्रुटि: " + data.message); }
+            } catch (error) { alert("सर्वर कनेक्शन फेल!"); }
+        }
+
+        async function processResetPassword() {
+            let phone = document.getElementById('forgot-phone').value;
+            let otp = document.getElementById('forgot-otp').value;
+            let newPass = document.getElementById('forgot-new-pass').value;
+
+            if(phone === "" || otp === "" || newPass === "") { alert("त्रुटि: कृपया सभी विवरण दर्ज करें!"); return; }
+            if(otp !== "9900") { alert("गलत रीसेट OTP! सही कोड '9900' डालें।"); return; }
+
+            try {
+                let response = await fetch('http://localhost:5000/api/forgot-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phone, newPassword: newPass })
+                });
+                let data = await response.json();
+                if(data.success) {
+                    alert("🎉 पासवर्ड सफलतापूर्वक बदल गया है! अब नए पासवर्ड से लॉगिन करें।");
+                    switchAuth('login');
+                } else { alert("त्रुटि: " + data.message); }
+            } catch (error) { alert("सर्वर एरर! पासवर्ड अपडेट नहीं हो सका।"); }
+        }
+    </script>
+</body>
+</html>

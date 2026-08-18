@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>91 Club - Master Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- ==================== 1. होम स्क्रीन ==================== -->
+        <div id="home-screen" class="page-content">
+            <div class="profile-header">
+                <div class="user-info">
+                    <div class="avatar">👤</div>
+                    <div>
+                        <h3>MEMBER_91CLUB</h3>
+                        <p>UID | 22466529</p>
+                    </div>
+                </div>
+                <div class="total-balance">
+                    <p>Total Balance</p>
+                    <h2>₹<span id="user-balance-home">0.00</span></h2>
+                </div>
+            </div>
+            <div class="spin-banner">
+                <h4>WHEEL SPIN - DEPOSIT NOW</h4>
+                <p>Lucky Spin to Win iPhone 17 Pro Max!</p>
+            </div>
+            <div class="lobby-section" style="padding: 10px;">
+                <h3 style="margin-left: 10px; color: #333;">🔥 Recommended Games</h3>
+                <div class="game-grid">
+                    <div class="game-card aviator" onclick="alert('Aviator गेम लोड हो रहा है...')">✈️ Aviator (+500%)</div>
+                    <div class="game-card wingo" onclick="switchPage('game-screen')">🔴 Win Go (Color Prediction)</div>
+                    <div class="game-card slots" onclick="alert('Slots जल्द आ रहा है')">🎰 Slots</div>
+                    <div class="game-card fishing" onclick="alert('Fishing जल्द आ रहा है')">🐟 Fishing</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 2. WIN GO गेम स्क्रीन ==================== -->
+        <div id="game-screen" class="page-content hidden">
+            <div class="game-top-header">
+                <h2>Win Go <span id="game-title-mode">30sec</span></h2>
+                <h3>Balance: ₹<span id="user-balance-game">0.00</span></h3>
+            </div>
+            <div class="time-modes-bar">
+                <button class="mode-tab-btn active" onclick="changeGameMode(30, '30sec')">WinGo 30s</button>
+                <button class="mode-tab-btn" onclick="changeGameMode(60, '1 Min')">WinGo 1m</button>
+                <button class="mode-tab-btn" onclick="changeGameMode(180, '3 Min')">WinGo 3m</button>
+                <button class="mode-tab-btn" onclick="changeGameMode(300, '5 Min')">WinGo 5m</button>
+            </div>
+            <div class="countdown-section">
+                <div class="period-box"><p>Period Number</p><h4 id="period-number">2026081810005472</h4></div>
+                <div class="timer-box"><p>Time remaining</p><div class="timer-digits"><span id="timer-m1">0</span><span id="timer-m2">0</span>:<span id="timer-s1">3</span><span id="timer-s2">0</span></div></div>
+            </div>
+            <div class="color-bet-section">
+                <button class="bet-color-btn g-btn" onclick="openBetPopup('Green')">Green</button>
+                <button class="bet-color-btn v-btn" onclick="openBetPopup('Violet')">Violet</button>
+                <button class="bet-color-btn r-btn" onclick="openBetPopup('Red')">Red</button>
+            </div>
+            <div class="number-grid">
+                <button class="num-btn n0" onclick="openBetPopup('0')">0</button>
+                <button class="num-btn n1" onclick="openBetPopup('1')">1</button>
+                <button class="num-btn n2" onclick="openBetPopup('2')">2</button>
+                <button class="num-btn n3" onclick="openBetPopup('3')">3</button>
+                <button class="num-btn n4" onclick="openBetPopup('4')">4</button>
+                <button class="num-btn n5" onclick="openBetPopup('5')">5</button>
+                <button class="num-btn n6" onclick="openBetPopup('6')">6</button>
+                <button class="num-btn n7" onclick="openBetPopup('7')">7</button>
+                <button class="num-btn n8" onclick="openBetPopup('8')">8</button>
+                <button class="num-btn n9" onclick="openBetPopup('9')">9</button>
+            </div>
+            <div class="big-small-section">
+                <button class="bs-btn big-btn" onclick="openBetPopup('Big')">Big</button>
+                <button class="bs-btn small-btn" onclick="openBetPopup('Small')">Small</button>
+            </div>
+            <div class="history-section">
+                <h4>Game history</h4>
+                <table class="history-table">
+                    <thead><tr><th>Period</th><th>Number</th><th>Big Small</th><th>Color</th></tr></thead>
+                    <tbody id="history-rows"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== 3. डिपॉजिट स्क्रीन ==================== -->
+        <div id="deposit-screen" class="page-content hidden">
+            <div class="wallet-header"><h3>Deposit Balance</h3><h2>₹<span id="user-balance-deposit">0.00</span></h2></div>
+            <div class="payment-methods-grid">
+                <div class="pm-box active">⚡ UPI-QR</div>
+                <div class="pm-box">Innate UPI</div>
+                <div class="pm-box">Paytm-QR</div>
+            </div>
+            <div class="deposit-body">
+                <h4>Select Deposit Amount</h4>
+                <div class="quick-amt-grid">
+                    <button onclick="setDepAmt(100)">₹100</button><button onclick="setDepAmt(200)">₹200</button><button onclick="setDepAmt(500)">₹500</button>
+                </div>
+                <input type="number" id="dep-amount" placeholder="₹ 100.00 - 50,000.00">
+                <button class="wallet-action-btn g-btn" onclick="addMoney()">Deposit Now</button>
+            </div>
+        </div>
+
+        <!-- ==================== 4. विथड्रॉल स्क्रीन ==================== -->
+        <div id="withdraw-screen" class="page-content hidden">
+            <div class="wallet-header"><h3>Available Balance</h3><h2>₹<span id="user-balance-withdraw">0.00</span></h2></div>
+            <div class="withdraw-body">
+                <div class="ar-pay-banner">⚠ ARPay Supports UPI for Fast Payments</div>
+                
+                <div class="bank-form-box" style="background: #fafafa; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ddd; text-align: left;">
+                    <p style="margin: 5px 0; font-weight: bold; color: #333; font-size: 14px;">🏦 Add Bank Details / UPI ID</p>
+                    <input type="text" id="user-bank-name" placeholder="Bank Name (e.g. SBI, HDFC)">
+                    <input type="text" id="user-acc-number" placeholder="Account Number">
+                    <input type="text" id="user-ifsc" placeholder="IFSC Code">
+                    <p style="margin: 5px 0; font-weight: bold; color: #333; font-size: 14px;">📱 Or Enter UPI ID</p>
+                    <input type="text" id="user-upi-id" placeholder="example@ybl, example@oksbi">
+                </div>
+
+                <input type="number" id="wit-amount" placeholder="Please enter withdrawal amount">
+                
+                <div class="otp-withdraw-box" style="margin-bottom: 15px;">
+                    <input type="text" id="wit-otp" placeholder="Enter Withdrawal OTP" style="width:60%; padding:10px; display:inline-block;">
+                    <button onclick="alert('विथड्रॉल OTP कोड है: 5566')" class="get-otp-btn" style="padding:10px;">Get Code</button>
+                </div>
+                
+                <button class="wallet-action-btn r-btn" onclick="takeMoney()">Withdrawal</button>
+            </div>
+        </div>
+
+        <!-- ओवरले और पॉप-अप्स -->
+        <div id="big-countdown-overlay" class="overlay hidden"><div id="big-timer-number">05</div></div>
+        <div id="bet-popup" class="popup-bottom hidden">
+            <div class="popup-content">
+                <div id="popup-header-banner" class="popup-banner">Select <span id="popup-selection">Green</span></div>
+                <div class="popup-body">
+                    <p>Amount</p>
+                    <div class="multiplier-row text-options"><button id="am-1" class="active" onclick="setBaseAmount(1)">1</button><button id="am-10" onclick="setBaseAmount(10)">10</button><button id="am-100" onclick="setBaseAmount(100)">100</button></div>
+                    <p>Multiplier</p>
+                    <div class="multiplier-row mult-options"><button id="mu-1" class="active" onclick="setMultiplier(1)">X1</button><button id="mu-10" onclick="setMultiplier(10)">X10</button><button id="mu-20" onclick="setMultiplier(20)">X20</button><button id="mu-50" onclick="setMultiplier(50)">X50</button><button id="mu-100" onclick="setMultiplier(100)">X100</button></div>
+                </div>
+                <div class="popup-footer"><button class="cancel-btn" onclick="closeBetPopup()">Cancel</button><button class="confirm-bet-btn" onclick="confirmBet()">Total ₹<span id="total-bet-amount">1.00</span></button></div>
+            </div>
+        </div>
+
+        <!-- 📱 नीचे की 4-बटन नेविगेशन बार -->
+        <div class="bottom-nav">
+            <div class="nav-item active" id="nav-home" onclick="switchPage('home-screen')">🏠<br>Home</div>
+            <div class="nav-item" id="nav-game" onclick="switchPage('game-screen')">🎮<br>WinGo</div>
+            <div class="nav-item" id="nav-deposit" onclick="switchPage('deposit-screen')">💳<br>Deposit</div>
+            <div class="nav-item" id="nav-withdraw" onclick="switchPage('withdraw-screen')">💸<br>Withdraw</div>
+        </div>
+
+    </div>
+    <!-- ⚠️ यहाँ टाइमस्टैम्प जोड़ा है ताकि ब्राउज़र पुराना कचरा लोड न करे -->
+    <script src="script.js?v=2"></script> 
+</body>
+</html>

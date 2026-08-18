@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>91 Club - Master Admin Control</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #1a202c; color: #fff; margin: 0; padding: 20px; }
+        .admin-container { max-width: 700px; margin: 0 auto; background: #2d3748; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        h1, h2 { text-align: center; color: #ff5e62; margin-bottom: 5px; }
+        .control-box { background: #1a202c; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #4a5568; }
+        .btn-group { display: flex; justify-content: space-around; margin-top: 10px; gap: 10px; }
+        button { padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: white; }
+        .g-btn { background-color: #4caf50; }
+        .r-btn { background-color: #f44336; }
+        .v-btn { background-color: #b159ff; }
+        .num-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 10px; }
+        .num-btn { background: #4a5568; color: white; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .num-btn.active, button.active { border: 2px solid #fff; box-shadow: 0 0 10px #ff5e62; }
+        .status-txt { text-align: center; font-weight: bold; color: #f5af19; }
+        
+        /* 📊 रिक्वेस्ट टेबल डिज़ाइन */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center; font-size: 14px; }
+        th { background-color: #4a5568; color: white; padding: 10px; }
+        td { padding: 10px; border-bottom: 1px solid #4a5568; background: #2d3748; }
+        .action-btn { padding: 5px 10px; border-radius: 4px; font-size: 12px; margin: 0 2px; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>👑 91 CLUB MASTER ADMIN</h1>
+        <p style="text-align: center; color: #a0aec0; margin-top: 0;">गेम, डिपॉजिट और विथड्रॉल का पूरा रिमोट कंट्रोल</p>
+
+        <!-- 🔴🟢 गेम रिमोट कंट्रोल बॉक्स -->
+        <div class="control-box">
+            <h2>🎨 अगला जीतने वाला रंग तय करें</h2>
+            <div class="btn-group">
+                <button id="color-Green" class="g-btn" onclick="setNextResult('color', 'Green')">Green</button>
+                <button id="color-Violet" class="v-btn" onclick="setNextResult('color', 'Violet')">Violet</button>
+                <button id="color-Red" class="r-btn" onclick="setNextResult('color', 'Red')">Red</button>
+            </div>
+            <h2 style="margin-top:20px;">🔢 अगला जीतने वाला नंबर तय करें</h2>
+            <div class="num-grid">
+                <button id="num-0" class="num-btn" onclick="setNextResult('number', '0')">0</button>
+                <button id="num-1" class="num-btn" onclick="setNextResult('number', '1')">1</button>
+                <button id="num-2" class="num-btn" onclick="setNextResult('number', '2')">2</button>
+                <button id="num-3" class="num-btn" onclick="setNextResult('number', '3')">3</button>
+                <button id="num-4" class="num-btn" onclick="setNextResult('number', '4')">4</button>
+                <button id="num-5" class="num-btn" onclick="setNextResult('number', '5')">5</button>
+                <button id="num-6" class="num-btn" onclick="setNextResult('number', '6')">6</button>
+                <button id="num-7" class="num-btn" onclick="setNextResult('number', '7')">7</button>
+                <button id="num-8" class="num-btn" onclick="setNextResult('number', '8')">8</button>
+                <button id="num-9" class="num-btn" onclick="setNextResult('number', '9')">9</button>
+            </div>
+            <div class="status-txt" id="admin-status" style="margin-top: 15px;">वर्तमान मोड: रैंडम (ऑटोमैटिक)</div>
+            <button style="background:#718096; width:100%; margin-top:10px;" onclick="setNextResult('reset', '')">🔄 वापस रैंडम मोड सेट करें</button>
+        </div>
+
+        <!-- 💳 ग्राहक डिपॉजिट (Add Money) लिस्ट -->
+        <div class="control-box">
+            <h2>💳 Deposit Requests (पैसे जोड़ना)</h2>
+            <table>
+                <thead><tr><th>यूजर फोन</th><th>राशि</th><th>एक्शन</th></tr></thead>
+                <tbody id="deposit-requests-rows">
+                    <!-- जावास्क्रिप्ट से लाइव डेटा आएगा -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 💸 ग्राहक विथड्रॉल (Withdraw) लिस्ट -->
+        <div class="control-box">
+            <h2>💸 Withdrawal Requests (पैसे निकालना)</h2>
+            <table>
+                <thead><tr><th>यूजर फोन</th><th>राशि</th><th>एक्शन</th></tr></thead>
+                <tbody id="withdraw-requests-rows">
+                    <!-- जावास्क्रिप्ट से लाइव डेटा आएगा -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // गेम रिजल्ट सेट करना
+        async function setNextResult(type, value) {
+            document.querySelectorAll('.control-box button').forEach(b => b.classList.remove('active'));
+            if(type !== 'reset') {
+                let btn = document.getElementById(type + '-' + value);
+                if(btn) btn.classList.add('active');
+                document.getElementById('admin-status').innerText = `🔥 अगला फिक्स रिजल्ट: ${value}`;
+            } else {
+                document.getElementById('admin-status').innerText = "वर्तमान मोड: रैंडम (ऑटोमैटिक)";
+            }
+            await fetch('http://localhost:5000/api/admin/set-result', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: type, value: value })
+            });
+        }
+
+        // 🔄 डिपॉजिट और विथड्रॉल लिस्ट को सर्वर से लोड करना
+        async function loadRequests() {
+            try {
+                let response = await fetch('http://localhost:5000/api/admin/get-requests');
+                let data = await response.json();
+
+                // डिपॉजिट लिस्ट लोड करें
+                let depRows = '';
+                data.deposits.forEach(dep => {
+                    depRows += `<tr><td>${dep.phone}</td><td>₹${dep.amount}</td>
+                        <td>
+                            <button class="action-btn g-btn" onclick="handleTx('deposit', '${dep._id}', 'pass')">Pass</button>
+                            <button class="action-btn r-btn" onclick="handleTx('deposit', '${dep._id}', 'fail')">Fail</button>
+                        </td></tr>`;
+                });
+                document.getElementById('deposit-requests-rows').innerHTML = depRows || '<tr><td colspan="3">कोई पेंडिंग डिपॉजिट नहीं है</td></tr>';
+
+                // विथड्रॉल लिस्ट लोड करें
+                let witRows = '';
+                data.withdraws.forEach(wit => {
+                    witRows += `<tr><td>${wit.phone}</td><td>₹${wit.amount}</td>
+                        <td>
+                            <button class="action-btn g-btn" onclick="handleTx('withdraw', '${wit._id}', 'pass')">Pass</button>
+                            <button class="action-btn r-btn" onclick="handleTx('withdraw', '${wit._id}', 'fail')">Fail</button>
+                        </td></tr>`;
+                });
+                document.getElementById('withdraw-requests-rows').innerHTML = witRows || '<tr><td colspan="3">कोई पेंडिंग विथड्रॉल नहीं है</td></tr>';
+
+            } catch (e) { console.log("डेटा लोड करने में एरर"); }
+        }
+
+        // 🎯 बटन दबाने पर पास या फेल करने का फंक्शन
+        async function handleTx(type, txId, status) {
+            let res = await fetch('http://localhost:5000/api/admin/handle-request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: type, txId: txId, status: status })
+            });
+            let reply = await res.json();
+            alert(reply.message);
+            loadRequests(); // लिस्ट तुरंत अपडेट करें
+        }
+
+        // हर 3 सेकंड में लिस्ट को ऑटोमैटिक रीफ्रेश करते रहना
+        setInterval(loadRequests, 3000);
+        loadRequests();
+    </script>
+</body>
+</html>
+<!-- 🔒 सीक्रेट एडमिन लॉगिन लॉक (पॉप-अप विंडो) -->
+<div id="admin-lock-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a202c; display: flex; justify-content: center; align-items: center; z-index: 9999;">
+    <div style="background: #2d3748; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); width: 80%; max-width: 320px;">
+        <h3 style="color: #ff5e62; margin-top: 0;">🔒 ADMIN SECURITY</h3>
+        <p style="color: #a0aec0; font-size: 14px;">आगे बढ़ने के लिए मालिक का सीक्रेट पासवर्ड दर्ज करें</p>
+        <input type="password" id="admin-secret-key" placeholder="Enter Secret Code" style="width: 90%; padding: 12px; border-radius: 8px; border: 1px solid #4a5568; background: #1a202c; color: white; text-align: center; font-size: 16px; margin-bottom: 15px;">
+        <button onclick="checkAdminPassword()" style="background: linear-gradient(to right, #ff512f, #dd2476); width: 95%; padding: 12px; border: none; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;">Verify & Enter</button>
+    </div>
+</div>
+
+<script>
+    // 🔑 आपका सीक्रेट एडमिन पासवर्ड (आप इसे बदल भी सकते हैं)
+    const SECRET_ADMIN_CODE = "9191"; 
+
+    function checkAdminPassword() {
+        let enteredCode = document.getElementById('admin-secret-key').value;
+        if (enteredCode === SECRET_ADMIN_CODE) {
+            alert("🔓 सुरक्षा प्रमाणित! मास्टर एडमिन पैनल में आपका स्वागत है, मालिक।");
+            document.getElementById('admin-lock-screen').style.display = 'none'; // लॉक स्क्रीन हटाएँ
+        } else {
+            alert("❌ गलत पासवर्ड! आप इस पैनल को कंट्रोल नहीं कर सकते।");
+        }
+    }
+</script>
