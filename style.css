@@ -1,476 +1,325 @@
-body { 
-    font-family: Arial, sans-serif; 
-    background-color: #f2f2f2; 
-    margin: 0; 
-    display: flex; 
-    justify-content: center; 
-}
-.app-container { 
-    background-color: #fff; 
-    width: 100%; 
-    max-width: 420px; 
-    min-height: 100vh; 
-    position: relative; 
-    padding-bottom: 70px; 
-    box-sizing: border-box; 
-}
-.page-content { 
-    width: 100%; 
-}
-.profile-header, .wallet-header { 
-    background: linear-gradient(135deg, #ff5e62, #ff9966); 
-    color: white; 
-    padding: 20px; 
-    text-align: center; 
-}
-.total-balance h2 { 
-    margin: 5px 0 0 0; 
-    font-size: 28px; 
-}
-.spin-banner { 
-    background: #fff3f3; 
-    border: 2px dashed #ff5e62; 
-    margin: 15px; 
-    padding: 15px; 
-    border-radius: 10px; 
-    text-align: center; 
-    font-weight: bold; 
-}
-.game-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 15px; 
-    padding: 15px; 
-}
-.game-card { 
-    padding: 25px 10px; 
-    border-radius: 10px; 
-    color: white; 
-    text-align: center; 
-    font-weight: bold; 
-    cursor: pointer; 
-}
-.aviator { background: linear-gradient(135deg, #1f4037, #99f2c8); }
-.wingo { background: linear-gradient(135deg, #f12711, #f5af19); }
-.slots { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
-.fishing { background: linear-gradient(135deg, #00c6ff, #0072ff); }
-.game-top-header { 
-    background: #ff5e62; 
-    color: white; 
-    padding: 10px; 
-    text-align: center; 
-}
-.time-modes-bar { 
-    display: flex; 
-    background: #fff; 
-    border-bottom: 1px solid #eee; 
-}
-.mode-tab-btn { 
-    flex: 1; 
-    padding: 12px 5px; 
-    border: none; 
-    background: none; 
-    font-size: 13px; 
-    cursor: pointer; 
-    color: #666; 
-}
-.mode-tab-btn.active { 
-    color: #ff5e62; 
-    font-weight: bold; 
-    border-bottom: 3px solid #ff5e62; 
-}
-.countdown-section { 
-    display: flex; 
-    justify-content: space-between; 
-    background: #fff5f5; 
-    padding: 12px; 
-    margin: 10px; 
-    border-radius: 8px; 
-}
-.timer-digits span { 
-    background: #333; 
-    color: white; 
-    padding: 2px 5px; 
-    margin: 0 2px; 
-    border-radius: 4px; 
-    font-weight: bold; 
-}
-.color-bet-section { 
-    display: flex; 
-    justify-content: space-around; 
-    padding: 10px; 
-}
-.bet-color-btn { 
-    width: 30%; 
-    padding: 10px; 
-    border: none; 
-    border-radius: 5px; 
-    color: white; 
-    font-weight: bold; 
-    cursor: pointer; 
-}
-.g-btn { background-color: #4caf50; } 
-.v-btn { background-color: #b159ff; } 
-.r-btn { background-color: #f44336; }
-.number-grid { 
-    display: grid; 
-    grid-template-columns: repeat(5, 1fr); 
-    gap: 8px; 
-    padding: 10px; 
-}
-.num-btn { 
-    padding: 10px; 
-    border: none; 
-    border-radius: 50%; 
-    color: white; 
-    font-weight: bold; 
-    cursor: pointer; 
-}
-.n0, .n5 { background: linear-gradient(to right, #4caf50, #b159ff); }
-.n1, .n3, .n7, .n9 { background-color: #4caf50; } 
-.n2, .n4, .n6, .n8 { background-color: #f44336; }
-
-.big-small-section { 
-    display: flex; 
-    gap: 15px; 
-    padding: 10px; 
-}
-.bs-btn { 
-    flex: 1; 
-    padding: 12px; 
-    border: none; 
-    border-radius: 8px; 
-    color: white; 
-    font-size: 16px; 
-    font-weight: bold; 
-    cursor: pointer; 
-}
-.big-btn { background-color: #ff9966; } 
-.small-btn { background-color: #2196f3; }
-
-.history-section { padding: 10px; }
-.history-table { 
-    width: 100%; 
-    text-align: center; 
-    border-collapse: collapse; 
-    font-size: 14px; 
-}
-.history-table th { 
-    background: #ff5e62; 
-    color: white; 
-    padding: 6px; 
-}
-.history-table td { 
-    padding: 6px; 
-    border-bottom: 1px solid #eee; 
-}
-.payment-methods-grid, .gateways-row { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 10px; 
-    padding: 15px; 
-}
-.pm-box, .gate-card { 
-    padding: 12px 5px; 
-    background: #fff; 
-    text-align: center; 
-    font-size: 12px; 
-    font-weight: bold; 
-    border: 1px solid #ddd; 
-    border-radius: 8px; 
-    cursor: pointer; 
-}
-.pm-box.active, .gate-card.active { 
-    border-color: #ff5e62; 
-    background: #fff5f5; 
-    color: #ff5e62; 
-}
-.quick-amt-grid { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 10px; 
-    padding: 0 15px 15px 15px; 
-}
-.quick-amt-grid button { 
-    padding: 12px; 
-    border: 1px solid #ddd; 
-    background: white; 
-    font-weight: bold; 
-    border-radius: 5px; 
-    cursor: pointer; 
-}
-.deposit-body, .withdraw-body { padding: 15px; }
-.deposit-body input, .withdraw-body input { 
-    width: 92%; 
-    padding: 12px; 
-    border: 1px solid #ddd; 
-    border-radius: 8px; 
-    font-size: 16px; 
-    margin-bottom: 15px; 
-}
-.wallet-action-btn { 
-    width: 100%; 
-    padding: 14px; 
-    border: none; 
-    border-radius: 25px; 
-    color: white; 
-    font-weight: bold; 
-    font-size: 16px; 
-    cursor: pointer; 
-}
-.ar-pay-banner { 
-    background: #fff3f3; 
-    color: #ff5e62; 
-    padding: 12px; 
-    border-radius: 8px; 
-    font-size: 13px; 
-    font-weight: bold; 
-    margin-bottom: 15px; 
-}
-.get-otp-btn { 
-    background: #ff9966; 
-    color: white; 
-    border: none; 
-    padding: 0 15px; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    font-weight: bold; 
-}
-.account-header-card { 
-    background: linear-gradient(to right, #ff5e62, #ff9966); 
-    color: white; 
-    text-align: center; 
-    padding: 30px; 
-}
-.avatar-big { 
-    font-size: 50px; 
-    background: rgba(255,255,255,0.2); 
-    width: 80px; 
-    height: 80px; 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-    border-radius: 50%; 
-}
-.uid-tag { 
-    background: rgba(0,0,0,0.1); 
-    display: inline-block; 
-    padding: 4px 12px; 
-    border-radius: 12px; 
-    font-size: 13px; 
-}
-.acc-info-grid { 
-    display: flex; 
-    background: white; 
-    margin: -20px 15px 15px 15px; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    padding: 15px 0; 
-}
-.info-tile { 
-    flex: 1; 
-    text-align: center; 
-    font-size: 13px; 
-    color: #666; 
-    border-right: 1px solid #eee; 
-    cursor: pointer; 
-}
-.info-tile:last-child { border-right: none; }
-.menu-list { 
-    background: white; 
-    margin: 15px; 
-    border-radius: 10px; 
-    padding: 5px 0; 
-}
-.menu-item { 
-    padding: 15px; 
-    border-bottom: 1px solid #eee; 
-    display: flex; 
-    justify-content: space-between; 
-    color: #333; 
-    font-size: 15px; 
-    cursor: pointer; 
+/* ==================== 📱 मुख्य लेआउट (App Container) ==================== */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
-.bottom-nav { 
-    position: fixed; 
-    bottom: 0; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: 100%; 
-    max-width: 420px; 
-    background: white; 
-    display: flex; 
-    justify-content: space-around; 
-    padding: 10px 0; 
-    border-top: 1px solid #ddd; 
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05); 
-    z-index: 10; 
-}
-.nav-item { 
-    text-align: center; 
-    font-size: 12px; 
-    color: #666; 
-    cursor: pointer; 
-    width: 25%; 
-}
-.nav-item.active { 
-    color: #ff5e62; 
-    font-weight: bold; 
+.app-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.overlay { 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: rgba(0,0,0,0.85); 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    z-index: 99; 
-}
-#big-timer-number { 
-    font-size: 100px; 
-    color: #ff5e62; 
-    font-weight: bold; 
-}
-.popup-bottom { 
-    position: fixed; 
-    bottom: 0; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: 100%; 
-    max-width: 420px; 
-    background: white; 
-    border-top-left-radius: 15px; 
-    border-top-right-radius: 15px; 
-    box-shadow: 0 -3px 10px rgba(0,0,0,0.15); 
-    z-index: 100; 
-}
-.popup-banner { 
-    padding: 12px; 
-    text-align: center; 
-    color: white; 
-    font-weight: bold; 
-    border-top-left-radius: 12px; 
-    border-top-right-radius: 12px; 
-}
-.popup-body { padding: 15px; }
-.multiplier-row { 
-    display: flex; 
-    gap: 8px; 
-    margin-top: 5px; 
-    margin-bottom: 15px; 
-}
-.multiplier-row button { 
-    flex: 1; 
-    padding: 10px; 
-    border: 1px solid #ddd; 
-    background: #f9f9f9; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    font-weight: bold; 
-}
-.multiplier-row button.active { 
-    background: #ff5e62; 
-    color: white; 
-    border-color: #ff5e62; 
-}
-.popup-footer { display: flex; }
-.cancel-btn { 
-    flex: 1; 
-    padding: 12px; 
-    background: #eee; 
-    border: none; 
-    cursor: pointer; 
-}
-.confirm-bet-btn { 
-    flex: 2; 
-    padding: 12px; 
-    background: #2196f3; 
-    color: white; 
-    border: none; 
-    font-weight: bold; 
-    cursor: pointer; 
-}
-.hidden { display: none !important; }
-/* ✨ गेम को 91 Club जैसा प्रीमियम लुक देने के लिए नया डिज़ाइन */
-
-/* बैंक और UPI फॉर्म को एक सुंदर कार्ड लुक देना */
-.bank-form-box {
-    background: #ffffff !important;
-    border: none !important;
-    border-radius: 15px !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    margin: 20px 15px !important;
-    padding: 20px !important;
+/* 📜 पेजों को स्क्रॉल करने के लिए जगह */
+.page-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 75px; /* ताकि नीचे का नेविगेशन बार कोड को न छिपाए */
     box-sizing: border-box;
 }
 
-/* इनपुट बॉक्स को गोल और चमकदार बनाना */
-.bank-form-box input, .deposit-body input, .withdraw-body input {
-    width: 100% !important;
-    padding: 14px !important;
-    margin-bottom: 12px !important;
-    border: 1px solid #eef0f3 !important;
-    border-radius: 10px !important;
-    background-color: #f8fafc !important;
-    font-size: 15px !important;
-    color: #333 !important;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
+.hidden {
+    display: none !important;
 }
 
-/* जब यूजर इनपुट बॉक्स पर क्लिक करे तो सुंदर इफ़ेक्ट आए */
-.bank-form-box input:focus, .deposit-body input:focus {
-    border-color: #ff5e62 !important;
-    background-color: #ffffff !important;
-    outline: none !important;
-    box-shadow: 0 0 8px rgba(255, 94, 98, 0.2) !important;
+/* ==================== 👤 होम स्क्रीन (Profile & Wallet) ==================== */
+.profile-header {
+    background: linear-gradient(to right, #ff512f, #dd2476);
+    color: white;
+    padding: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
-/* फॉर्म के हेडिंग्स को बोल्ड और अट्रैक्टिव बनाना */
-.bank-form-box p {
-    font-size: 15px !important;
-    color: #4a5568 !important;
-    margin: 10px 0 8px 0 !important;
+.user-info {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
-/* डिपॉजिट पेज के ₹100, ₹200 वाले बटनों को सुंदर बनाना */
-.quick-amt-grid button {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    color: #4a5568 !important;
-    font-size: 15px !important;
-    font-weight: bold !important;
-    padding: 12px !important;
-    border-radius: 10px !important;
-    transition: all 0.2s ease !important;
+.user-info h3 { margin: 0; font-size: 18px; }
+.user-info p { margin: 5px 0 0 0; font-size: 12px; opacity: 0.8; }
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
 }
 
-/* जब यूजर किसी राशि पर माउस ले जाए या क्लिक करे */
-.quick-amt-grid button:hover, .quick-amt-grid button:active {
-    background: linear-gradient(135deg, #ff5e62, #ff9966) !important;
-    color: white !important;
-    border-color: transparent !important;
-    transform: scale(1.05);
-}
-
-/* गेम हिस्ट्री टेबल का लुक साफ़ करना */
-.history-section {
-    background: #ffffff;
-    margin: 15px;
-    border-radius: 15px;
+.total-balance {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
     padding: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-radius: 12px;
 }
 
-.history-table th {
-    background: linear-gradient(to right, #ff5e62, #ff9966) !important;
-    border-radius: 5px;
+.total-balance p { margin: 0; font-size: 14px; opacity: 0.9; }
+.total-balance h2 { margin: 5px 0 0 0; font-size: 28px; font-weight: bold; }
+
+/* 🎁 स्पिन बैनर */
+.spin-banner {
+    background: #fff8e1;
+    border: 1px dashed #ffa000;
+    border-radius: 10px;
+    margin: 15px 10px;
+    padding: 12px;
+    text-align: center;
 }
+.spin-banner h4 { margin: 0; color: #e65100; font-size: 14px; }
+.spin-banner p { margin: 5px 0 0 0; color: #555; font-size: 12px; }
+
+/* 🎮 गेम्स ग्रिड (2x2) */
+.game-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 10px;
+}
+
+.game-card {
+    border-radius: 12px;
+    padding: 25px 15px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.1s;
+}
+.game-card:active { transform: scale(0.95); }
+
+.aviator { background: linear-gradient(135deg, #0288d1, #26c6da); }
+.wingo { background: linear-gradient(135deg, #ff5252, #ff7043); }
+.slots { background: linear-gradient(135deg, #7e57c2, #ab47bc); }
+.fishing { background: linear-gradient(135deg, #26a69a, #26c6da); }
+
+/* ==================== 🎮 WIN GO गेम स्क्रीन नियम ==================== */
+.game-top-header {
+    background: #212121;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.game-top-header h2 { margin: 0; font-size: 18px; color: #ffbc00; }
+.game-top-header h3 { margin: 0; font-size: 16px; }
+
+.time-modes-bar {
+    display: flex;
+    background: #f1f5f9;
+    padding: 5px;
+}
+.mode-tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+}
+.mode-tab-btn.active {
+    background: white;
+    color: #ff512f;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.countdown-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10px;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+.period-box p, .timer-box p { margin: 0; font-size: 11px; color: #888; }
+.period-box h4 { margin: 5px 0 0 0; font-size: 14px; color: #333; }
+.timer-digits { margin-top: 5px; font-size: 22px; font-weight: bold; color: #ff512f; letter-spacing: 1px; }
+
+/* बेटिंग बटन्स */
+.color-bet-section {
+    display: flex;
+    gap: 10px;
+    padding: 15px 10px;
+}
+.bet-color-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.g-btn { background: #4caf50; }
+.v-btn { background: #b159ff; }
+.r-btn { background: #f44336; }
+
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 10px;
+}
+.num-btn {
+    padding: 12px 0;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    background: white;
+    cursor: pointer;
+}
+.n0 { border-color: #b159ff; color: #b159ff; }
+.n5 { border-color: #b159ff; color: #b159ff; }
+.n1, .n3, .n7, .n9 { border-color: #4caf50; color: #4caf50; }
+.n2, .n4, .n6, .n8 { border-color: #f44336; color: #f44336; }
+
+.big-small-section {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+.bs-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.big-btn { background: #ffa000; }
+.small-btn { background: #0288d1; }
+
+/* इतिहास टेबल */
+.history-section { padding: 10px; }
+.history-section h4 { margin: 10px 0; color: #333; }
+.history-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; }
+.history-table th { background: #f5f5f5; padding: 8px; color: #666; }
+.history-table td { padding: 10px 8px; border-bottom: 1px solid #eee; color: #444; }
+
+/* ==================== 💳 वॉलेट स्क्रीन (डिपॉज़िट / विथड्रॉल) ==================== */
+.wallet-header {
+    background: #212121;
+    color: white;
+    padding: 25px 15px;
+    text-align: center;
+}
+.wallet-header h3 { margin: 0; font-size: 13px; opacity: 0.7; }
+.wallet-header h2 { margin: 5px 0 0 0; font-size: 32px; color: #ffbc00; }
+
+.deposit-body input, .withdraw-body input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.quick-amt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.quick-amt-grid button {
+    padding: 10px;
+    border: 1px solid #ff512f;
+    background: none;
+    color: #ff512f;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.wallet-action-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* ==================== 📱 जादुई फिक्स: स्क्रीन के अंदर तैरता नीचे का नेविगेशन बार ==================== */
+.bottom-nav {
+    position: absolute; /* इसे कंटेनर के अंदर बांध दिया */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 999; /* ताकि यह हमेशा सबसे ऊपर चमके */
+}
+
+.nav-item {
+    text-align: center;
+    font-size: 11px;
+    color: #757575;
+    cursor: pointer;
+    flex: 1;
+    padding: 5px 0;
+}
+
+.nav-item.active {
+    color: #ff512f;
+    font-weight: bold;
+}
+
+/* 🎯 ओवरले पॉपअप */
+.overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+#big-timer-number { font-size: 90px; color: white; font-weight: bold; }
+
+.popup-bottom {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    background: white;
+    border-top-left-radius: 16px; border-top-right-radius: 16px;
+    z-index: 1001;
+    box-sizing: border-box;
+}
+.popup-content { padding: 20px; }
+.popup-banner { background: #ff512f; color: white; padding: 10px; text-align: center; font-weight: bold; border-radius: 6px; }
+.popup-footer { display: flex; gap: 10px; margin-top: 15px; }
+.popup-footer button { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.cancel-btn { background: #eee; color: #333; }
+.confirm-bet-btn { background: #4caf50; color: white; }
