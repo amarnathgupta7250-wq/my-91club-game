@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>91 Club - Master Dashboard</title>
+    <!-- 🔌 जावास्क्रिप्ट फ़ाइल को यहाँ सबसे ऊपर सही कनेक्ट कर दिया है भाई -->
+    <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <style>
         /* 🚨 महा-जादुई कोडिंग फिक्स: बटन बार को स्क्रीन पर हमेशा सबसे ऊपर फिक्स रखने के लिए 🚨 */
@@ -16,13 +18,13 @@
             max-width: 420px !important;
             height: 70px !important;
             background: #ffffff !important;
-            border-top: 2px solid #ff512f !important; /* पहचान के लिए लाल बॉर्डर दिया है */
+            border-top: 2px solid #ff512f !important;
             display: flex !important;
             justify-content: space-around !important;
             align-items: center !important;
             padding: 5px 0 !important;
             box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.2) !important;
-            z-index: 9999999 !important; /* इसे पूरी स्क्रीन पर सबसे ऊपर रखने के लिए */
+            z-index: 9999999 !important;
             box-sizing: border-box !important;
         }
         .nav-btn-item {
@@ -37,7 +39,6 @@
         .nav-btn-item.active {
             color: #ff512f !important;
         }
-        /* पेजों को नीचे से खुला रखने के लिए ताकि बटन कोड को न छिपाए */
         .page-content {
             padding-bottom: 90px !important;
             box-sizing: border-box !important;
